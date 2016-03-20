@@ -1,3 +1,5 @@
+require('expose?$!expose?jQuery!jquery');
+require("bootstrap-webpack");
 import React from 'react'
 import ReactDOM from 'react-dom'
 import createBrowserHistory from 'history/lib/createBrowserHistory'
@@ -6,6 +8,9 @@ import { syncHistoryWithStore } from 'react-router-redux'
 import makeRoutes from './routes'
 import Root from './containers/Root'
 import configureStore from './redux/configureStore'
+import injectTapEventPlugin from 'react-tap-event-plugin'
+import { Provider } from 'react-redux';
+injectTapEventPlugin()
 
 // Configure history for react-router
 const browserHistory = useRouterHistory(createBrowserHistory)({
@@ -17,7 +22,7 @@ const browserHistory = useRouterHistory(createBrowserHistory)({
 // so we need to provide a custom `selectLocationState` to inform
 // react-router-redux of its location.
 const initialState = window.__INITIAL_STATE__
-const store = configureStore(initialState, browserHistory)
+const store = configureStore()
 const history = syncHistoryWithStore(browserHistory, store, {
   selectLocationState: (state) => state.router
 })
