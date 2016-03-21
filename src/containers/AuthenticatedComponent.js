@@ -4,6 +4,7 @@ import { BACKEND_API } from '../redux/utils/constants'
 import * as actionCreators from '../redux/modules/auth/auth.actions'
 import { bindActionCreators } from 'redux'
 import { browserHistory } from 'react-router'
+import {parseJSON} from '../redux/utils/misc'
 
 function mapStateToProps (state) {
   return {
@@ -20,8 +21,8 @@ function mapDispatchToProps (dispatch) {
 export function requireAuthentication (Component) {
   class AuthenticatedComponent extends React.Component {
     static propTypes = {
-      loginUserSuccess: React.PropTypes.func,
-      isAuthenticated: React.PropTypes.func
+      loginUserSuccess: React.PropTypes.any,
+      isAuthenticated: React.PropTypes.any
     };
     componentWillMount () {
       this.checkAuth()
@@ -42,23 +43,22 @@ export function requireAuthentication (Component) {
         } else {
           return fetch(BACKEND_API + '/users/validate_token', {
             method: 'post',
-            credentials: 'include',
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
               'Authorization': 'Bearer ' + token
             },
             body: JSON.stringify({token: token})
-          })
-            .then((res) => {
-              if (res.status === 200) {
-                this.props.loginUserSuccess(token)
+          }).then(function(response) {
+                return response.json();
+              }).then((res) => {
+                this.props.loginUserSuccess({token:res.auth_token,user:res.user})
                 this.setState({
                   loaded_if_needed: true
                 })
-              } else {
-                browserHistory.push('/login')
-              }
+
+            }).catch(function(ex) {
+              console.log('parsing failed', ex)
             })
         }
       } else {

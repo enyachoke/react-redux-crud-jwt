@@ -19,7 +19,7 @@ function mapDispatchToProps (dispatch) {
 export function DetermineAuth (Component) {
   class AuthenticatedComponent extends React.Component {
     static propTypes = {
-      loginUserSuccess: React.PropTypes.func
+      loginUserSuccess: React.PropTypes.any
     };
     componentWillMount () {
       this.checkAuth()
@@ -45,14 +45,20 @@ export function DetermineAuth (Component) {
               'Authorization': 'Bearer ' + token
             },
             body: JSON.stringify({token: token})
-          })
-            .then((res) => {
-              if (res.status === 200) {
-                this.props.loginUserSuccess(token)
+          }).tthen(function(response) {
+                return response.json();
+              }).then((res) => {
+                console.log(res)
+                this.props.loginUserSuccess({token:res.auth_token,user:res.user})
                 this.setState({
                   loaded_if_needed: true
                 })
-              }
+
+            }).catch(function(ex) {
+              console.log('parsing failed', ex)
+              this.setState({
+                loaded_if_needed: true
+              })
             })
         }
       } else {

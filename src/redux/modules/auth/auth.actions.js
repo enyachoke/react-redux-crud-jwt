@@ -4,13 +4,11 @@ import {parseJSON} from '../../utils/misc'
 import {browserHistory} from 'react-router'
 import {getToken} from './auth.http'
 
-export function loginUserSuccess (token) {
-  localStorage.setItem('token', token)
+export function loginUserSuccess (payload) {
+  localStorage.setItem('token', payload.token)
   return {
     type: LOGIN_USER_SUCCESS,
-    payload: {
-      token: token
-    }
+    payload
   }
 }
 
@@ -58,7 +56,7 @@ export function loginUser (email, password, redirect = '/') {
       .then(parseJSON)
       .then((response) => {
         try {
-          dispatch(loginUserSuccess(response.auth_token))
+          dispatch(loginUserSuccess({token:response.auth_token,user:response.user}))
           browserHistory.push('/')
         } catch (e) {
           alert(e)

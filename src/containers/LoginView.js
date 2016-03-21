@@ -29,92 +29,50 @@ const style = {
 
 class LoginView extends React.Component {
   static propTypes = {
-    loginUser: React.PropTypes.func,
-    statusText: React.PropTypes.string
+    loginUser: React.PropTypes.any,
+    statusText: React.PropTypes.any
   };
   constructor (props) {
     super(props)
     const redirectRoute = '/login'
     this.state = {
-      email: '',
+      username: '',
       password: '',
-      email_error_text: null,
+      username_error_text: null,
       password_error_text: null,
       redirectTo: redirectRoute,
       disabled: true
     }
   }
-
-  isDisabled () {
-    let email_is_valid = false
-    let password_is_valid = false
-
-    if (this.state.email === '') {
-      this.setState({
-        email_error_text: null
-      })
-    } else {
-      if (validateEmail(this.state.email)) {
-        email_is_valid = true
-        this.setState({
-          email_error_text: null
-        })
-      } else {
-        this.setState({
-          email_error_text: 'Sorry, this is not a valid email'
-        })
-      }
-    }
-
-    if (this.state.password === '' || !this.state.password) {
-      this.setState({
-        password_error_text: null
-      })
-    } else {
-      if (this.state.password.length >= 6) {
-        password_is_valid = true
-        this.setState({
-          password_error_text: null
-        })
-      } else {
-        this.setState({
-          password_error_text: 'Your password must be at least 6 characters'
-        })
-      }
-    }
-
-    if (email_is_valid && password_is_valid) {
-      this.setState({
-        disabled: false
-      })
-    }
-  }
-
-  changeValue (e, type) {
+  getUserNameValue = (e) => {
     const value = e.target.value
     const next_state = {}
-    next_state[type] = value
+    next_state['username'] = value
     this.setState(next_state, () => {
-      this.isDisabled()
     })
   }
 
-  _handleKeyPress (e) {
+  getPasswordValue = (e) => {
+    const value = e.target.value
+    const next_state = {}
+    next_state['password'] = value
+    this.setState(next_state, () => {
+    })
+  }
+  _handleKeyPress = (e) => {
     if (e.key === 'Enter') {
-      if (!this.state.disabled) {
         this.login(e)
-      }
     }
   }
 
-  login (e) {
+  login = (e) => {
     e.preventDefault()
-    this.props.loginUser(this.state.email, this.state.password, this.state.redirectTo)
+    this.props.loginUser(this.state.username, this.state.password, this.state.redirectTo)
   }
 
   render () {
     return (
-      <div className='col-md-6 col-md-offset-3' onKeyPress={function (e) { return this._handleKeyPress(e) }}>
+      <div className='col-md-6 col-md-offset-3' onKeyPress={this._handleKeyPress}>
         <Paper style={style}>
           <form role='form'>
             <div className='text-center'>
@@ -123,27 +81,22 @@ class LoginView extends React.Component {
                 <div className='alert alert-info'>
                   {this.props.statusText}
                 </div>}
-              <div className='col-md-12'>
                 <TextField
-                  hintText='Email'
-                  floatingLabelText='Email'
-                  type='email'
-                  errorText={this.state.email_error_text}
-                  onChange={function (e) { return this.changeValue(e, 'email') }} />
-              </div>
-              <div className='col-md-12'>
+                  hintText='Username'
+                  floatingLabelText='Username'
+                  type='username'
+                  errorText={this.state.username_error_text}
+                  onChange={this.getUserNameValue} /><br/>
                 <TextField
                   hintText='Password'
                   floatingLabelText='Password'
                   type='password'
                   errorText={this.state.password_error_text}
-                  onChange={function (e) { return this.changeValue(e, 'password') }} />
-              </div>
+                  onChange={this.getPasswordValue} /><br/>
               <RaisedButton
-                disabled={this.state.disabled}
                 style={{'marginTop': 50}}
                 label='Submit'
-                onClick={function (e) { return this.login(e) }} />
+                onClick={this.login} />
             </div>
           </form>
         </Paper>

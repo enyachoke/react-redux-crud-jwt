@@ -8,7 +8,7 @@ import MenuItem from 'material-ui/lib/menus/menu-item'
 import FlatButton from 'material-ui/lib/flat-button'
 import listensToClickOutside from 'react-onclickoutside/decorator'
 import Divider from 'material-ui/lib/divider'
-import { browserHistory } from 'react-router'
+import {Link} from 'react-router'
 
 function mapStateToProps (state) {
   return {
@@ -26,8 +26,8 @@ function mapDispatchToProps (dispatch) {
 @listensToClickOutside()
 export class Header extends Component {
   static propTypes = {
-    logoutAndRedirect: React.PropTypes.fun,
-    isAuthenticated: React.PropTypes.func
+    logoutAndRedirect: React.PropTypes.any,
+    isAuthenticated: React.PropTypes.any
   };
   constructor (props) {
     super(props)
@@ -35,9 +35,7 @@ export class Header extends Component {
       open: false
     }
   }
-
-  dispatchNewRoute (route) {
-    browserHistory.push(route)
+  closeNav = () => {
     this.setState({
       open: false
     })
@@ -49,7 +47,7 @@ export class Header extends Component {
     })
   }
 
-  logout (e) {
+  logout = (e) => {
     e.preventDefault()
     this.props.logoutAndRedirect()
     this.setState({
@@ -57,7 +55,7 @@ export class Header extends Component {
     })
   }
 
-  openNav () {
+  openNav = (e) => {
     this.setState({
       open: true
     })
@@ -70,30 +68,30 @@ export class Header extends Component {
             {
                 !this.props.isAuthenticated
                 ? <div>
-                  <MenuItem onClick={function (e) { return this.dispatchNewRoute('/login') }}>
-                          Login
+                  <MenuItem onClick={this.closeNav} linkButton containerElement={<Link to='/login' />}>
+                      Login
                   </MenuItem>
                 </div>
 
                 : <div>
 
-                  <MenuItem onClick={function (e) { return this.dispatchNewRoute('/analytics') }}>
+                  <MenuItem onClick={this.closeNav} linkButton containerElement={<Link to='/analytics' />}>
                       Analytics
                   </MenuItem>
+
                   <Divider />
 
-                  <MenuItem onClick={function (e) { return this.logout(e) }}>
+                  <MenuItem onClick={this.logout}>
                       Logout
                   </MenuItem>
                 </div>
             }
         </LeftNav>
         <AppBar
-          title='React-Redux-Flask'
-          onLeftIconButtonTouchTap={function () { return this.openNav() }}
+          title='React-Redux-JWT'
+          onLeftIconButtonTouchTap={this.openNav}
           iconElementRight={
-
-            <FlatButton label='Home' onClick={function () { return this.dispatchNewRoute('/') }} />
+            <FlatButton label={'Home'} containerElement={<Link to='/'/>} />
           }
         />
       </header>
