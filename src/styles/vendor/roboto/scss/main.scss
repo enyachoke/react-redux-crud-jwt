@@ -1,0 +1,72 @@
+$font-path: "../fonts/" !default;
+$roboto-font-path : $font-path !default;
+
+$webfonts-roboto-settings: (
+        font-family: 'Roboto',
+        base-names: (
+                100: (
+                        normal: roboto-thin-webfont,
+                        italic: roboto-thinitalic-webfont
+                ),
+                300: (
+                        normal: roboto-light-webfont,
+                        italic: roboto-lightitalic-webfont
+                ),
+                400: (
+                        normal: roboto-regular-webfont,
+                        italic: roboto-italic-webfont
+                ),
+                500: (
+                        normal: roboto-medium-webfont,
+                        italic: roboto-mediumitalic-webfont
+                ),
+                700: (
+                        normal: roboto-bold-webfont,
+                        italic: roboto-bolditalic-webfont
+                ),
+                900: (
+                        normal: roboto-black-webfont,
+                        italic: roboto-blackitalic-webfont
+                ),
+        )
+) !default;
+
+$webfonts-roboto-include: (
+        100: (normal, italic),
+        300: (normal, italic),
+        400: (normal, italic),
+        500: (normal, italic),
+        700: (normal, italic),
+        900: (normal, italic),
+) !default;
+
+@mixin generate-webfonts-roboto {
+
+  $font-family: map-get($webfonts-roboto-settings, font-family);
+  $base-names: map-get($webfonts-roboto-settings, base-names);
+
+  @each $weight, $styles in $webfonts-roboto-include {
+    @each $style in $styles {
+      @if (map-has-key($base-names, $weight)) {
+        $base-names-for-given-weight: map-get($base-names, $weight);
+        @if (map-has-key($base-names-for-given-weight, $style)) {
+          $base-name: map-get($base-names-for-given-weight, $style);
+
+          @font-face {
+            font-family: $font-family;
+            src: url('#{$roboto-font-path}#{$base-name}.eot');
+            src: url('#{$roboto-font-path}#{$base-name}.eot?#iefix') format('embedded-opentype'),
+            url('#{$roboto-font-path}#{$base-name}.woff2') format('woff2'),
+            url('#{$roboto-font-path}#{$base-name}.woff') format('woff'),
+            url('#{$roboto-font-path}#{$base-name}.ttf') format('truetype');
+            font-weight: $weight;
+            font-style: $style;
+          }
+
+        }
+      }
+    }
+  }
+}
+
+@include generate-webfonts-roboto;

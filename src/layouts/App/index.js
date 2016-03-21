@@ -1,28 +1,24 @@
-import React, { Component } from 'react';
-
-/* global styles for app */
-import './styles/app.scss';
-
-/* application components */
-import { Header } from '../Header';
-import { Footer } from '../Footer';
+import React, { Component } from 'react'
+import './styles/app.scss'
+import { Header } from '../Header'
+import { Footer } from '../Footer'
 
 export class App extends Component {
-    static propTypes = {
-        children: React.PropTypes.any,
-    }
+  static propTypes = {
+    children: React.PropTypes.any
+  }
 
-    render() {
-        return (
-            <section>
-                <Header/>
-                <div className="container" style={{"marginTop": 10, "paddingBottom": 250}}>
-                    {this.props.children}
-                </div>
-                <div>
-                    <Footer />
-                </div>
-            </section>
-        );
-    }
+  render () {
+    return (
+      <section>
+        <Header/>
+        <div className='container' style={{'marginTop': 10, 'paddingBottom': 250}}>
+            {this.props.children}
+        </div>
+        <div>
+          <Footer />
+        </div>
+      </section>
+    )
+  }
 }
