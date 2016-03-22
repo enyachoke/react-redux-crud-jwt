@@ -1,8 +1,14 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { BACKEND_API } from '../redux/utils/constants'
+import {
+  connect
+} from 'react-redux'
+import {
+  BACKEND_API
+} from '../redux/utils/constants'
 import * as actionCreators from '../redux/modules/auth/auth.actions'
-import { bindActionCreators } from 'redux'
+import {
+  bindActionCreators
+} from 'redux'
 
 function mapStateToProps (state) {
   return {
@@ -44,22 +50,26 @@ export function DetermineAuth (Component) {
               'Content-Type': 'application/json',
               'Authorization': 'Bearer ' + token
             },
-            body: JSON.stringify({token: token})
-          }).tthen(function(response) {
-                return response.json();
-              }).then((res) => {
-                console.log(res)
-                this.props.loginUserSuccess({token:res.auth_token,user:res.user})
-                this.setState({
-                  loaded_if_needed: true
-                })
-
-            }).catch(function(ex) {
-              console.log('parsing failed', ex)
-              this.setState({
-                loaded_if_needed: true
-              })
+            body: JSON.stringify({
+              token: token
             })
+          }).tthen(function (response) {
+            return response.json()
+          }).then((res) => {
+            console.log(res)
+            this.props.loginUserSuccess({
+              token: res.auth_token,
+              user: res.user
+            })
+            this.setState({
+              loaded_if_needed: true
+            })
+          }).catch(function (ex) {
+            console.log('parsing failed', ex)
+            this.setState({
+              loaded_if_needed: true
+            })
+          })
         }
       } else {
         this.setState({
@@ -69,13 +79,11 @@ export function DetermineAuth (Component) {
     }
 
     render () {
-      return (
-        <div>
-          {this.state.loaded_if_needed
-             ? <Component {...this.props}/>
-             : null}
-        </div>
-      )
+      return (<div> {
+        this.state.loaded_if_needed ? < Component {...this.props
+        }
+        /> : null
+      } </div>)
     }
   }
 

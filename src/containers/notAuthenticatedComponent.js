@@ -13,7 +13,7 @@ import {
   browserHistory
 } from 'react-router'
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
   return {
     token: state.auth.token,
     userName: state.auth.userName,
@@ -21,32 +21,32 @@ function mapStateToProps(state) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
   return bindActionCreators(actionCreators, dispatch)
 }
 
-export function requireNoAuthentication(Component) {
+export function requireNoAuthentication (Component) {
   class notAuthenticatedComponent extends React.Component {
     static propTypes = {
       loginUserSuccess: React.PropTypes.any,
       isAuthenticated: React.PropTypes.any
     };
-    constructor(props) {
+    constructor (props) {
       super(props)
       this.state = {
         loaded: false
       }
     }
 
-    componentWillMount() {
+    componentWillMount () {
       this.checkAuth()
     }
 
-    componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps (nextProps) {
       this.checkAuth(nextProps)
     }
 
-    checkAuth(props = this.props) {
+    checkAuth (props = this.props) {
       if (props.isAuthenticated) {
         browserHistory.push('/main')
       } else {
@@ -63,15 +63,15 @@ export function requireNoAuthentication(Component) {
             body: JSON.stringify({
               token: token
             })
-          }).then(function(response) {
-            return response.json();
+          }).then(function (response) {
+            return response.json()
           }).then((res) => {
             this.props.loginUserSuccess({
               token: res.auth_token,
               user: res.user
             })
             browserHistory.push('/')
-          }).catch(function(ex) {
+          }).catch(function (ex) {
             console.log('parsing failed', ex)
             this.setState({
               loaded: true
@@ -85,8 +85,8 @@ export function requireNoAuthentication(Component) {
       }
     }
 
-    render() {
-      return ( < div > {!this.props.isAuthenticated && this.state.loaded ? < Component {...this.props
+    render () {
+      return (<div> {!this.props.isAuthenticated && this.state.loaded ? < Component {...this.props
         }
         /> : null
       } < /div>)

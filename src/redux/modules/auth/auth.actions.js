@@ -1,15 +1,13 @@
-import { LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE,
-  LOGIN_USER_REQUEST, LOGOUT_USER } from './auth.constants'
-import {parseJSON} from '../../utils/misc'
-import {browserHistory} from 'react-router'
-import {getToken} from './auth.http'
+import { LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, LOGIN_USER_REQUEST, LOGOUT_USER } from './auth.constants'
+import { parseJSON } from '../../utils/misc'
+import { browserHistory } from 'react-router'
+import { getToken } from './auth.http'
 
 export function loginUserSuccess (payload) {
   localStorage.setItem('token', payload.token)
   return {
     type: LOGIN_USER_SUCCESS,
-    payload
-  }
+    payload}
 }
 
 export function loginUserFailure (error) {
@@ -56,7 +54,7 @@ export function loginUser (email, password, redirect = '/') {
       .then(parseJSON)
       .then((response) => {
         try {
-          dispatch(loginUserSuccess({token:response.auth_token,user:response.user}))
+          dispatch(loginUserSuccess({token: response.auth_token, user: response.user}))
           browserHistory.push('/')
         } catch (e) {
           alert(e)

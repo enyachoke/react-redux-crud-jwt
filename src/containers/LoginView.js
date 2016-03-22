@@ -5,7 +5,6 @@ import * as actionCreators from '../redux/modules/auth/auth.actions'
 import TextField from 'material-ui/lib/text-field'
 import RaisedButton from 'material-ui/lib/raised-button'
 import Paper from 'material-ui/lib/paper'
-import { validateEmail } from '../redux/utils/misc'
 
 function mapStateToProps (state) {
   return {
@@ -61,7 +60,7 @@ class LoginView extends React.Component {
   }
   _handleKeyPress = (e) => {
     if (e.key === 'Enter') {
-        this.login(e)
+      this.login(e)
     }
   }
 
@@ -81,18 +80,18 @@ class LoginView extends React.Component {
                 <div className='alert alert-info'>
                   {this.props.statusText}
                 </div>}
-                <TextField
-                  hintText='Username'
-                  floatingLabelText='Username'
-                  type='username'
-                  errorText={this.state.username_error_text}
-                  onChange={this.getUserNameValue} /><br/>
-                <TextField
-                  hintText='Password'
-                  floatingLabelText='Password'
-                  type='password'
-                  errorText={this.state.password_error_text}
-                  onChange={this.getPasswordValue} /><br/>
+              <TextField
+                hintText='Username'
+                floatingLabelText='Username'
+                type='username'
+                errorText={this.state.username_error_text}
+                onChange={this.getUserNameValue} /><br/>
+              <TextField
+                hintText='Password'
+                floatingLabelText='Password'
+                type='password'
+                errorText={this.state.password_error_text}
+                onChange={this.getPasswordValue} /><br/>
               <RaisedButton
                 style={{'marginTop': 50}}
                 label='Submit'

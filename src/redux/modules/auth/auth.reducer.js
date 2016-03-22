@@ -1,9 +1,5 @@
-import {createReducer} from '../../utils/misc'
-import {LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, LOGIN_USER_REQUEST,
-   LOGOUT_USER, REGISTER_USER_FAILURE, REGISTER_USER_REQUEST,
-   REGISTER_USER_SUCCESS} from './auth.constants'
-
-import jwtDecode from 'jwt-decode'
+import { createReducer } from '../../utils/misc'
+import { LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, LOGIN_USER_REQUEST, LOGOUT_USER } from './auth.constants'
 
 const initialState = {
   token: null,

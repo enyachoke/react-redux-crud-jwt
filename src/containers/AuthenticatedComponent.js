@@ -1,10 +1,17 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { BACKEND_API } from '../redux/utils/constants'
+import {
+  connect
+} from 'react-redux'
+import {
+  BACKEND_API
+} from '../redux/utils/constants'
 import * as actionCreators from '../redux/modules/auth/auth.actions'
-import { bindActionCreators } from 'redux'
-import { browserHistory } from 'react-router'
-import {parseJSON} from '../redux/utils/misc'
+import {
+  bindActionCreators
+} from 'redux'
+import {
+  browserHistory
+} from 'react-router'
 
 function mapStateToProps (state) {
   return {
@@ -48,18 +55,22 @@ export function requireAuthentication (Component) {
               'Content-Type': 'application/json',
               'Authorization': 'Bearer ' + token
             },
-            body: JSON.stringify({token: token})
-          }).then(function(response) {
-                return response.json();
-              }).then((res) => {
-                this.props.loginUserSuccess({token:res.auth_token,user:res.user})
-                this.setState({
-                  loaded_if_needed: true
-                })
-
-            }).catch(function(ex) {
-              console.log('parsing failed', ex)
+            body: JSON.stringify({
+              token: token
             })
+          }).then(function (response) {
+            return response.json()
+          }).then((res) => {
+            this.props.loginUserSuccess({
+              token: res.auth_token,
+              user: res.user
+            })
+            this.setState({
+              loaded_if_needed: true
+            })
+          }).catch(function (ex) {
+            console.log('parsing failed', ex)
+          })
         }
       } else {
         this.setState({
@@ -69,13 +80,11 @@ export function requireAuthentication (Component) {
     }
 
     render () {
-      return (
-        <div>
-          {this.props.isAuthenticated && this.state.loaded_if_needed
-              ? <Component {...this.props}/>
-             : null}
-        </div>
-      )
+      return (<div> {
+        this.props.isAuthenticated && this.state.loaded_if_needed ? < Component {...this.props
+        }
+        /> : null
+      } </div>)
     }
   }
 
