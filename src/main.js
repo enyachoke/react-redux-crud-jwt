@@ -1,6 +1,7 @@
 require('expose?$!expose?jQuery!jquery')
 require('bootstrap-webpack')
 import 'babel-polyfill'
+import 'isomorphic-fetch'
 import 'styles/vendor/roboto/scss/main.scss'
 import React from 'react'
 import ReactDOM from 'react-dom'
