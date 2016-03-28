@@ -1,15 +1,9 @@
-/* global styles */
-@import 'fonts/roboto';
-@import 'typography';
-@import 'links';
 @import "~react-toolbox/lib/base";
 $playground-width: 50%;
 $navigation-width: 22 * $unit;
 $navigation-h-padding: 2.4 * $unit;
 $navigation-v-padding: 1.2 * $unit;
 $navigation-footer-border: solid 1px rgb(224, 224, 224);
-$documentation-left-shadow: 0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12),0 2px 4px -1px rgba(0,0,0,.2);
-$documentation-right-shadow: -2px 0 4px rgba(0,0,0,.14);
 .root {
   display: flex;
   width: $navigation-width;
@@ -22,9 +16,10 @@ $documentation-right-shadow: -2px 0 4px rgba(0,0,0,.14);
   flex-grow: 1;
   overflow-y: auto;
 }
-
+.link {
+    text-decoration: none;
+}
 .item {
-  padding: $navigation-v-padding $navigation-h-padding;
   > span > span {
     font-size: $font-size-small;
     font-weight: $font-weight-semi-bold;
@@ -35,11 +30,14 @@ $documentation-right-shadow: -2px 0 4px rgba(0,0,0,.14);
   background: $color-divider;
 }
 
-:global(body) {
-  position: relative;
-  font-family: 'Roboto', sans-serif !important;
-  h1, h2, h3, h4 {
-    font-weight: 300;
+.footer {
+  flex-grow: 0;
+  padding: $navigation-h-padding;
+  overflow: hidden;
+  font-size: $font-size-small;
+  color: $color-text-secondary;
+  border-top: $navigation-footer-border;
+  > * {
+    display: block;
   }
-
 }

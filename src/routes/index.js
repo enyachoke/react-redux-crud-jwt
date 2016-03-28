@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, IndexRoute } from 'react-router'
+import { Route, IndexRedirect } from 'react-router'
 import HomeView from 'views/HomeView/HomeView'
 import NotFound from 'containers/NotFound'
 import {DetermineAuth} from 'containers/DetermineAuth'
@@ -12,7 +12,7 @@ import { HomeContainer } from '../layouts/HomeContainer'
 import ClientsView from 'views/ClientsView'
 export default (
   <Route path='/' component={App}>
-    <IndexRoute component={requireAuthentication(HomeView)} />
+    <IndexRedirect to="/home" />
     <Route path='login' component={requireNoAuthentication(LoginView)}/>
     <Route path='analytics' component={requireAuthentication(Analytics)}/>
     <Route path='home' component={requireAuthentication(HomeContainer)}/>

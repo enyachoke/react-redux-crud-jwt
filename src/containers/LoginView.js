@@ -5,7 +5,7 @@ import * as actionCreators from '../redux/modules/auth/auth.actions'
 import TextField from 'material-ui/lib/text-field'
 import RaisedButton from 'material-ui/lib/raised-button'
 import Paper from 'material-ui/lib/paper'
-
+import Input from 'react-toolbox/lib/input';
 function mapStateToProps (state) {
   return {
     isAuthenticating: state.auth.isAuthenticating,
@@ -80,18 +80,13 @@ class LoginView extends React.Component {
                 <div className='alert alert-info'>
                   {this.props.statusText}
                 </div>}
-              <TextField
-                hintText='Username'
-                floatingLabelText='Username'
-                type='username'
-                errorText={this.state.username_error_text}
-                onChange={this.getUserNameValue} /><br/>
-              <TextField
-                hintText='Password'
-                floatingLabelText='Password'
-                type='password'
-                errorText={this.state.password_error_text}
-                onChange={this.getPasswordValue} /><br/>
+              <Input type='text' label='Username' name='username'
+              error={this.state.username_error_text}
+              value={this.state.username}
+              onChange={this.getUserNameValue} maxLength={16 } />
+              <Input type='password' label='Password' name='password' 
+              error={this.state.password_error_text}
+              onChange={this.getPasswordValue} maxLength={16 } />
               <RaisedButton
                 style={{'marginTop': 50}}
                 label='Submit'
