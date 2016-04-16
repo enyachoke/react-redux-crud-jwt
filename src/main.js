@@ -9,12 +9,10 @@ import { Provider } from 'react-redux'
 import { Router } from 'react-router'
 import configureStore from './redux/store/configureStore'
 import routes from './routes'
-import injectTapEventPlugin from 'react-tap-event-plugin'
 import 'style.scss'
 import { browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 
-injectTapEventPlugin()
 const store = configureStore()
 const history = syncHistoryWithStore(browserHistory, store)
 

@@ -53,7 +53,7 @@ export function DetermineAuth (Component) {
             body: JSON.stringify({
               token: token
             })
-          }).tthen(function (response) {
+          }).then(function (response) {
             return response.json()
           }).then((res) => {
             console.log(res)

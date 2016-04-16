@@ -1,13 +1,19 @@
 import React, { Component } from 'react'
 import './styles/app.scss'
-import { Header } from '../Header'
-import { Footer } from '../Footer'
 import { AppBar, Checkbox, IconButton } from 'react-toolbox';
 import { Layout, NavDrawer, Panel, Sidebar } from 'react-toolbox';
 import { List, ListItem, ListSubHeader, ListDivider, ListCheckbox } from 'react-toolbox';
 import style from './navigation.scss';
 import components from './components';
 export class App extends Component {
+  constructor() {
+    super()
+    this.state = {
+        drawerActive: false,
+        drawerPinned: true,
+        sidebarPinned: false
+    }
+  }
   static propTypes = {
     children: React.PropTypes.any
   }
@@ -39,19 +45,30 @@ export class App extends Component {
      );
    });
  }
+ toggleDrawerActive = () => {
+        this.setState({ drawerActive: !this.state.drawerActive });
+    };
+
+    toggleDrawerPinned = () => {
+        this.setState({ drawerPinned: !this.state.drawerPinned });
+    }
+
+    toggleSidebar = () => {
+        this.setState({ sidebarPinned: !this.state.sidebarPinned });
+    };
   render () {
     return (
       <Layout>
-              <NavDrawer active={true}
-                  pinned={true} permanentAt='xxxl'
-                  onOverlayClick={ this.toggleDrawerActive }>
+      <NavDrawer active={this.state.drawerActive}
+            pinned={this.state.drawerPinned} permanentAt='xxxl'
+            onOverlayClick={ this.toggleDrawerActive }>
                   <List className={style.list} selectable ripple>
                   {this.renderDrawerItems()}
                   </List>
               </NavDrawer>
               <Panel>
-                  <AppBar><IconButton icon='menu' inverse={ true } onClick={ this.toggleDrawerActive }/></AppBar>
-                  <div style={{ flex: 1, overflowY: 'auto', padding: '1.8rem','minHeight': '100vh' }}>
+                  <AppBar><IconButton icon='menu' inverse={ true } onClick={ this.toggleDrawerPinned }/></AppBar>
+                  <div style={{ flex: 1, overflowY: 'auto', padding: '1.8rem','minHeight': '100vh'}}>
                       {this.props.children}
                   </div>
               </Panel>

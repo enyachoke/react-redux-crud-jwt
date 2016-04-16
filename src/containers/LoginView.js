@@ -2,10 +2,8 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as actionCreators from '../redux/modules/auth/auth.actions'
-import TextField from 'material-ui/lib/text-field'
-import RaisedButton from 'material-ui/lib/raised-button'
-import Paper from 'material-ui/lib/paper'
 import Input from 'react-toolbox/lib/input';
+import {Button, IconButton} from 'react-toolbox/lib/button';
 function mapStateToProps (state) {
   return {
     isAuthenticating: state.auth.isAuthenticating,
@@ -68,11 +66,14 @@ class LoginView extends React.Component {
     e.preventDefault()
     this.props.loginUser(this.state.username, this.state.password, this.state.redirectTo)
   }
-
+  handleChange = (name, value) => {
+    const next_state = {}
+    next_state[name] = value
+    this.setState(next_state, () => {
+    })
+    };
   render () {
     return (
-      <div className='col-md-6 col-md-offset-3' onKeyPress={this._handleKeyPress}>
-        <Paper style={style}>
           <form role='form'>
             <div className='text-center'>
               <h2>Login to view protected content!</h2>
@@ -82,19 +83,14 @@ class LoginView extends React.Component {
                 </div>}
               <Input type='text' label='Username' name='username'
               error={this.state.username_error_text}
-              value={this.state.username}
-              onChange={this.getUserNameValue} maxLength={16 } />
-              <Input type='password' label='Password' name='password' 
+              value={this.state.userName}
+            onChange={this.handleChange.bind(this, 'username')} maxLength={16 } />
+              <Input type='password' label='Password' name='password'
               error={this.state.password_error_text}
-              onChange={this.getPasswordValue} maxLength={16 } />
-              <RaisedButton
-                style={{'marginTop': 50}}
-                label='Submit'
-                onClick={this.login} />
+              onChange={this.handleChange.bind(this, 'password')} maxLength={16 } />
+                <Button  onClick={this.login} label='Login' raised primary />
             </div>
           </form>
-        </Paper>
-      </div>
     )
   }
 }
